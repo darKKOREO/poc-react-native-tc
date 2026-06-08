@@ -1,4 +1,10 @@
 {
   "name": "MyTVApp",
-  "slug": "MyTVApp"
+  "slug": "MyTVApp",
+  "android": {
+    "package": "com.anonymous.MyTVApp"
+  },
+  "ios": {
+    "bundleIdentifier": "com.anonymous.MyTVApp"
+  }
 }
