@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { FocusableItem } from '../../components/FocusableItem';
 import { theme } from '../../theme';
 import { getPlatformName } from '../../utils/platform';
@@ -7,7 +7,7 @@ import { getPlatformName } from '../../utils/platform';
 export const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>🎬 My TV App</Text>
+      <Text style={styles.title}>My TV App</Text>
       <Text style={styles.subtitle}>Platform: {getPlatformName()}</Text>
 
       <View style={styles.row}>
@@ -17,7 +17,11 @@ export const HomeScreen: React.FC = () => {
             hasTVPreferredFocus={index === 0}
             onPress={() => console.log(`Pressed: ${item}`)}
           >
-            <Text style={styles.itemText}>{item}</Text>
+            {({ focused }) => (
+              <Text style={[styles.itemText, focused && styles.itemTextFocused]}>
+                {item}
+              </Text>
+            )}
           </FocusableItem>
         ))}
       </View>
@@ -49,5 +53,9 @@ const styles = StyleSheet.create({
   itemText: {
     color: theme.colors.text,
     fontSize: theme.fontSize.md,
+  },
+  itemTextFocused: {
+    color: theme.colors.background,
+    fontWeight: '700',
   },
 });

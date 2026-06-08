@@ -1,15 +1,11 @@
-import React, { useRef } from 'react';
-import {
-  TouchableHighlight,
-  View,
-  StyleSheet,
-  Platform,
-  ViewStyle,
-} from 'react-native';
+import React from 'react';
+import { Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { theme } from '../../theme';
 
+type RenderChild = (state: { focused: boolean }) => React.ReactNode;
+
 type Props = {
-  children: React.ReactNode;
+  children: React.ReactNode | RenderChild;
   onPress?: () => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -27,10 +23,13 @@ export const FocusableItem: React.FC<Props> = ({
 }) => {
   const [focused, setFocused] = React.useState(false);
 
+  const content = typeof children === 'function'
+    ? (children as RenderChild)({ focused })
+    : children;
+
   return (
-    <TouchableHighlight
+    <Pressable
       hasTVPreferredFocus={hasTVPreferredFocus}
-      underlayColor={theme.colors.surface}
       onPress={onPress}
       onFocus={() => {
         setFocused(true);
@@ -40,17 +39,10 @@ export const FocusableItem: React.FC<Props> = ({
         setFocused(false);
         onBlur?.();
       }}
+      style={[styles.container, focused && styles.focused, style]}
     >
-      <View
-        style={[
-          styles.container,
-          focused && styles.focused,
-          style,
-        ]}
-      >
-        {children}
-      </View>
-    </TouchableHighlight>
+      {content}
+    </Pressable>
   );
 };
 
@@ -58,11 +50,13 @@ const styles = StyleSheet.create({
   container: {
     padding: theme.spacing.md,
     borderRadius: theme.borderRadius.md,
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: 'transparent',
+    backgroundColor: theme.colors.surface,
   },
   focused: {
-    borderColor: theme.colors.focusedBorder,
-    backgroundColor: theme.colors.surface,
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.focused,
+    transform: [{ scale: 1.1 }],
   },
 });

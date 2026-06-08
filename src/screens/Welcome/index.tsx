@@ -1,0 +1,148 @@
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { FocusableItem } from '../../components/FocusableItem';
+import { theme } from '../../theme';
+import { RootStackParamList } from '../../navigation';
+import { fetchShows } from '../../services/api';
+import { saveShows, hasShows } from '../../services/storage';
+
+type WelcomeNavProp = NativeStackNavigationProp<RootStackParamList, 'Welcome'>;
+
+type SyncState = 'idle' | 'syncing' | 'done' | 'error';
+
+export const WelcomeScreen: React.FC = () => {
+  const navigation = useNavigation<WelcomeNavProp>();
+  const [syncState, setSyncState] = useState<SyncState>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [dataExists, setDataExists] = useState(false);
+
+  useEffect(() => {
+    hasShows().then(setDataExists);
+  }, []);
+
+  const handleSync = async () => {
+    console.log('[Sync] button pressed');
+    setSyncState('syncing');
+    setErrorMsg('');
+    try {
+      console.log('[Sync] fetching from TVMaze...');
+      const shows = await fetchShows();
+      console.log(`[Sync] got ${shows.length} shows, saving...`);
+      await saveShows(shows);
+      setDataExists(true);
+      setSyncState('done');
+      console.log('[Sync] done');
+    } catch (e: any) {
+      console.error('[Sync] error:', e.message);
+      setErrorMsg(e.message ?? 'Unknown error');
+      setSyncState('error');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.logo}>MyTV</Text>
+      <Text style={styles.tagline}>Your entertainment, on every screen</Text>
+
+      {syncState === 'syncing' ? (
+        <View style={styles.syncingRow}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <Text style={styles.syncingText}>Fetching shows...</Text>
+        </View>
+      ) : (
+        <View style={styles.buttonRow}>
+          <FocusableItem
+            hasTVPreferredFocus={!dataExists}
+            onPress={handleSync}
+            style={styles.button}
+          >
+            {({ focused }) => (
+              <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
+                {syncState === 'done' ? 'Sync Again' : 'Sync Data'}
+              </Text>
+            )}
+          </FocusableItem>
+
+          {dataExists && (
+            <FocusableItem
+              hasTVPreferredFocus
+              onPress={() => navigation.navigate('Dashboard')}
+              style={styles.button}
+            >
+              {({ focused }) => (
+                <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
+                  Browse
+                </Text>
+              )}
+            </FocusableItem>
+          )}
+        </View>
+      )}
+
+      {syncState === 'done' && (
+        <Text style={styles.successText}>Sync complete — data saved to device</Text>
+      )}
+      {syncState === 'error' && (
+        <Text style={styles.errorText}>Error: {errorMsg}</Text>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: theme.spacing.lg,
+  },
+  logo: {
+    color: theme.colors.primary,
+    fontSize: 96,
+    fontWeight: 'bold',
+    letterSpacing: 4,
+  },
+  tagline: {
+    color: theme.colors.textSecondary,
+    fontSize: theme.fontSize.md,
+    marginBottom: theme.spacing.md,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    gap: theme.spacing.md,
+  },
+  button: {
+    paddingHorizontal: theme.spacing.xl,
+    paddingVertical: theme.spacing.sm,
+    minWidth: 260,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: theme.colors.text,
+    fontSize: theme.fontSize.md,
+    fontWeight: '600',
+  },
+  buttonTextFocused: {
+    color: theme.colors.background,
+    fontWeight: '700',
+  },
+  syncingRow: {
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  syncingText: {
+    color: theme.colors.textSecondary,
+    fontSize: theme.fontSize.md,
+  },
+  successText: {
+    color: '#4CAF50',
+    fontSize: theme.fontSize.sm,
+  },
+  errorText: {
+    color: theme.colors.primary,
+    fontSize: theme.fontSize.sm,
+  },
+});
