@@ -7,6 +7,7 @@ import { theme } from '../../theme';
 import { RootStackParamList } from '../../navigation';
 import { fetchShows } from '../../services/api';
 import { saveShows, hasShows } from '../../services/storage';
+import { downloadAllImages } from '../../services/imageDownloader';
 
 type WelcomeNavProp = NativeStackNavigationProp<RootStackParamList, 'Welcome'>;
 
@@ -17,6 +18,7 @@ export const WelcomeScreen: React.FC = () => {
   const [syncState, setSyncState] = useState<SyncState>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [dataExists, setDataExists] = useState(false);
+  const [progress, setProgress] = useState({ done: 0, total: 0 });
 
   useEffect(() => {
     hasShows().then(setDataExists);
@@ -29,8 +31,12 @@ export const WelcomeScreen: React.FC = () => {
     try {
       console.log('[Sync] fetching from TVMaze...');
       const shows = await fetchShows();
-      console.log(`[Sync] got ${shows.length} shows, saving...`);
-      await saveShows(shows);
+      console.log(`[Sync] got ${shows.length} shows, downloading images...`);
+      setProgress({ done: 0, total: shows.length });
+      const cachedShows = await downloadAllImages(shows, (done, total) => {
+        setProgress({ done, total });
+      });
+      await saveShows(cachedShows);
       setDataExists(true);
       setSyncState('done');
       console.log('[Sync] done');
@@ -49,7 +55,11 @@ export const WelcomeScreen: React.FC = () => {
       {syncState === 'syncing' ? (
         <View style={styles.syncingRow}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
-          <Text style={styles.syncingText}>Fetching shows...</Text>
+          <Text style={styles.syncingText}>
+            {progress.total === 0
+              ? 'Fetching shows...'
+              : `Downloading images... ${progress.done}/${progress.total}`}
+          </Text>
         </View>
       ) : (
         <View style={styles.buttonRow}>

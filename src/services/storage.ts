@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Show } from './api';
+import { CachedShow } from './imageDownloader';
 
 const SHOWS_KEY = 'cached_shows';
 
-export const saveShows = (shows: Show[]) =>
+export const saveShows = (shows: CachedShow[]) =>
   AsyncStorage.setItem(SHOWS_KEY, JSON.stringify(shows));
 
-export const loadShows = async (): Promise<Show[] | null> => {
+export const loadShows = async (): Promise<CachedShow[] | null> => {
   const raw = await AsyncStorage.getItem(SHOWS_KEY);
   return raw ? JSON.parse(raw) : null;
 };

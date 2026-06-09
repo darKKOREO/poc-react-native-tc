@@ -11,23 +11,23 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { FocusableItem } from '../../components/FocusableItem';
 import { theme } from '../../theme';
-import { Show } from '../../services/api';
 import { loadShows } from '../../services/storage';
+import { CachedShow } from '../../services/imageDownloader';
 
 const { width } = Dimensions.get('window');
 const COLUMNS = 4;
 const CARD_WIDTH = (width - theme.spacing.xl * 2 - theme.spacing.md * (COLUMNS - 1)) / COLUMNS;
 const CARD_HEIGHT = CARD_WIDTH * 1.5;
 
-type CardProps = { show: Show; isFirst: boolean };
+type CardProps = { show: CachedShow; isFirst: boolean };
 
 const ShowCard: React.FC<CardProps> = ({ show, isFirst }) => (
   <FocusableItem hasTVPreferredFocus={isFirst} style={styles.card}>
     {({ focused }) => (
       <>
-        {show.image?.medium ? (
+        {show.localImageUri ? (
           <Image
-            source={{ uri: show.image!.medium }}
+            source={{ uri: show.localImageUri }}
             style={styles.image}
             resizeMode="cover"
           />
@@ -64,7 +64,7 @@ const ShowCard: React.FC<CardProps> = ({ show, isFirst }) => (
 
 export const DashboardScreen: React.FC = () => {
   const navigation = useNavigation();
-  const [shows, setShows] = useState<Show[]>([]);
+  const [shows, setShows] = useState<CachedShow[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const DashboardScreen: React.FC = () => {
   }, []);
 
   const renderItem = useCallback(
-    ({ item, index }: { item: Show; index: number }) => (
+    ({ item, index }: { item: CachedShow; index: number }) => (
       <ShowCard show={item} isFirst={index === 0} />
     ),
     [],
