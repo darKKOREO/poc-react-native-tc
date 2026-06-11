@@ -8,8 +8,8 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { FocusableItem } from '../../components/FocusableItem';
+import { BackButton } from '../../components/BackButton';
 import { theme } from '../../theme';
 import { loadShows } from '../../services/storage';
 import { CachedShow } from '../../services/imageDownloader';
@@ -19,10 +19,10 @@ const COLUMNS = 4;
 const CARD_WIDTH = (width - theme.spacing.xl * 2 - theme.spacing.md * (COLUMNS - 1)) / COLUMNS;
 const CARD_HEIGHT = CARD_WIDTH * 1.5;
 
-type CardProps = { show: CachedShow; isFirst: boolean };
+type CardProps = { show: CachedShow };
 
-const ShowCard: React.FC<CardProps> = ({ show, isFirst }) => (
-  <FocusableItem hasTVPreferredFocus={isFirst} style={styles.card}>
+const ShowCard: React.FC<CardProps> = ({ show }) => (
+  <FocusableItem style={styles.card}>
     {({ focused }) => (
       <>
         {show.localImageUri ? (
@@ -63,7 +63,6 @@ const ShowCard: React.FC<CardProps> = ({ show, isFirst }) => (
 );
 
 export const DashboardScreen: React.FC = () => {
-  const navigation = useNavigation();
   const [shows, setShows] = useState<CachedShow[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -75,9 +74,7 @@ export const DashboardScreen: React.FC = () => {
   }, []);
 
   const renderItem = useCallback(
-    ({ item, index }: { item: CachedShow; index: number }) => (
-      <ShowCard show={item} isFirst={index === 0} />
-    ),
+    ({ item }: { item: CachedShow }) => <ShowCard show={item} />,
     [],
   );
 
@@ -92,14 +89,8 @@ export const DashboardScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <BackButton hasTVPreferredFocus />
         <Text style={styles.headerTitle}>MyTV</Text>
-        <FocusableItem onPress={() => navigation.goBack()} style={styles.backButton}>
-          {({ focused }) => (
-            <Text style={[styles.backText, focused && styles.backTextFocused]}>
-              ← Back
-            </Text>
-          )}
-        </FocusableItem>
       </View>
 
       <FlatList
@@ -139,18 +130,6 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSize.xl,
     fontWeight: 'bold',
     letterSpacing: 2,
-  },
-  backButton: {
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.xs,
-  },
-  backText: {
-    color: theme.colors.text,
-    fontSize: theme.fontSize.sm,
-  },
-  backTextFocused: {
-    color: theme.colors.background,
-    fontWeight: '700',
   },
   grid: {
     paddingHorizontal: theme.spacing.xl,

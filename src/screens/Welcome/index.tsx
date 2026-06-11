@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { FocusableItem } from '../../components/FocusableItem';
+import { BackButton } from '../../components/BackButton';
 import { theme } from '../../theme';
 import { RootStackParamList } from '../../navigation';
 import { fetchShows } from '../../services/api';
@@ -49,6 +50,7 @@ export const WelcomeScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.logo}>MyTV</Text>
       <Text style={styles.tagline}>Your entertainment, on every screen</Text>
 

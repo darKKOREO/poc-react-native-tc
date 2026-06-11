@@ -40,6 +40,13 @@ export const styles = StyleSheet.create({
   mapContainer: {
     flex: 65,
   },
+  backButton: {
+    position: 'absolute',
+    top: mapTheme.spacing.lg,
+    left: mapTheme.spacing.lg,
+    zIndex: 10,
+    borderRadius: mapTheme.borderRadius.sm,
+  },
   map: {
     flex: 1,
   },

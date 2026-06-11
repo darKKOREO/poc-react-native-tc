@@ -1,20 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { FocusableItem } from '../../components/FocusableItem';
+import { BackButton } from '../../components/BackButton';
 import { theme } from '../../theme';
 import { getPlatformName } from '../../utils/platform';
 
 export const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
+      <BackButton hasTVPreferredFocus />
       <Text style={styles.title}>My TV App</Text>
       <Text style={styles.subtitle}>Platform: {getPlatformName()}</Text>
 
       <View style={styles.row}>
-        {['Movies', 'Series', 'Live TV', 'Settings'].map((item, index) => (
+        {['Movies', 'Series', 'Live TV', 'Settings'].map((item) => (
           <FocusableItem
             key={item}
-            hasTVPreferredFocus={index === 0}
             onPress={() => console.log(`Pressed: ${item}`)}
           >
             {({ focused }) => (

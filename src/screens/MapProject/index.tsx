@@ -13,6 +13,7 @@ import { MAP_STYLE_URL } from '@/config/mapConfig';
 import { BANGKOK_BOUNDS, MAP_MIN_ZOOM, MAP_MAX_ZOOM, ensureOfflinePack } from '@/services/mapTiles';
 import { Project, MOCK_PROJECTS } from '@/services/projects';
 import { saveProjects, loadProjects, hasProjects } from '@/services/storage';
+import { BackButton } from '@/components/BackButton';
 import { PriceBubble } from './PriceBubble';
 import { ClusterBubble } from './ClusterBubble';
 import { ProjectListPanel } from './ProjectListPanel';
@@ -139,6 +140,7 @@ export const MapProjectScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.mapContainer}>
+        <BackButton hasTVPreferredFocus style={styles.backButton} />
         <MapLibreMap
           onRegionDidChange={handleRegionDidChange}
           cameraRef={cameraRef}
