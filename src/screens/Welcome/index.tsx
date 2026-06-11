@@ -88,6 +88,17 @@ export const WelcomeScreen: React.FC = () => {
               )}
             </FocusableItem>
           )}
+
+          <FocusableItem
+            onPress={() => navigation.navigate('MapProject')}
+            style={styles.button}
+          >
+            {({ focused }) => (
+              <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
+                Map Demo
+              </Text>
+            )}
+          </FocusableItem>
         </View>
       )}
 

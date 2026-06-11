@@ -60,5 +60,6 @@ target 'MyTVApp' do
       :mac_catalyst_enabled => false,
       :ccache_enabled => ccache_enabled?(podfile_properties),
     )
+    $MLRN.post_install(installer)
   end
 end
