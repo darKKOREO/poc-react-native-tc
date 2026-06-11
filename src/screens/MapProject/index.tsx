@@ -17,6 +17,7 @@ import { BackButton } from '@/components/BackButton';
 import { PriceBubble } from './PriceBubble';
 import { ClusterBubble } from './ClusterBubble';
 import { ProjectListPanel } from './ProjectListPanel';
+import { SearchBar } from './SearchBar';
 import { styles, mapTheme } from './styles';
 
 type PointProps = { projectId: string };
@@ -40,6 +41,7 @@ export const MapProjectScreen: React.FC = () => {
   const [visibleBounds, setVisibleBounds] = useState<LngLatBounds>(BANGKOK_BOUNDS);
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const cameraRef = useRef<CameraRef>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -72,32 +74,42 @@ export const MapProjectScreen: React.FC = () => {
     };
   }, []);
 
+  const filteredProjects = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return projects;
+    return projects.filter(
+      (project) =>
+        project.name.toLowerCase().includes(query) ||
+        project.province?.toLowerCase().includes(query),
+    );
+  }, [projects, searchQuery]);
+
   const clusterIndex = useMemo(() => {
     const index = new Supercluster<PointProps>({ radius: 50, maxZoom: MAP_MAX_ZOOM });
-    const points: Supercluster.PointFeature<PointProps>[] = projects.map((project) => ({
+    const points: Supercluster.PointFeature<PointProps>[] = filteredProjects.map((project) => ({
       type: 'Feature',
       properties: { projectId: project.id },
       geometry: { type: 'Point', coordinates: [project.lng, project.lat] },
     }));
     index.load(points);
     return index;
-  }, [projects]);
+  }, [filteredProjects]);
 
   const projectsById = useMemo(() => {
     const map: Record<string, Project> = {};
-    projects.forEach((p) => {
+    filteredProjects.forEach((p) => {
       map[p.id] = p;
     });
     return map;
-  }, [projects]);
+  }, [filteredProjects]);
 
   const clusters = useMemo(() => {
     return clusterIndex.getClusters(visibleBounds, Math.round(zoom));
   }, [clusterIndex, visibleBounds, zoom]);
 
   const visibleProjects = useMemo(
-    () => projects.filter((project) => isWithinBounds(project, visibleBounds)),
-    [projects, visibleBounds],
+    () => filteredProjects.filter((project) => isWithinBounds(project, visibleBounds)),
+    [filteredProjects, visibleBounds],
   );
 
   const handleRegionDidChange = useCallback(
@@ -141,6 +153,7 @@ export const MapProjectScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.mapContainer}>
         <BackButton hasTVPreferredFocus style={styles.backButton} />
+        <SearchBar value={searchQuery} onChangeText={setSearchQuery}/>
         <MapLibreMap
           onRegionDidChange={handleRegionDidChange}
           cameraRef={cameraRef}

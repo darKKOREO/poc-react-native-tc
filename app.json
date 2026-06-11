@@ -6,5 +6,6 @@
   },
   "ios": {
     "bundleIdentifier": "com.anonymous.MyTVApp"
-  }
+  },
+  "plugins": ["@react-native-tvos/config-tv"]
 }

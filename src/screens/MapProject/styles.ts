@@ -1,17 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const mapTheme = {
   colors: {
-    background: '#FFFFFF',
-    panelBackground: '#F5F5F5',
-    border: '#E0E0E0',
-    text: '#1A1A1A',
-    textSecondary: '#6B6B6B',
-    bubble: '#FFFFFF',
-    bubbleBorder: '#1A1A1A',
-    bubbleSelected: '#2563EB',
-    cluster: '#2563EB',
-    clusterText: '#FFFFFF',
+    background: "#FFFFFF",
+    panelBackground: "#F5F5F5",
+    border: "#E0E0E0",
+    text: "#1A1A1A",
+    textSecondary: "#6B6B6B",
+    bubble: "#FFFFFF",
+    bubbleBorder: "#1A1A1A",
+    bubbleSelected: "#2563EB",
+    cluster: "#2563EB",
+    clusterText: "#FFFFFF",
   },
   spacing: {
     xs: 4,
@@ -34,14 +34,14 @@ export const mapTheme = {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: mapTheme.colors.background,
   },
   mapContainer: {
     flex: 65,
   },
   backButton: {
-    position: 'absolute',
+    position: "absolute",
     top: mapTheme.spacing.lg,
     left: mapTheme.spacing.lg,
     zIndex: 10,
@@ -51,18 +51,35 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   loadingOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255,255,255,0.85)',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.85)",
     gap: mapTheme.spacing.md,
   },
   loadingText: {
     color: mapTheme.colors.text,
     fontSize: mapTheme.fontSize.md,
+  },
+  searchBarContainer: {
+    position: "absolute",
+    top: mapTheme.spacing.lg * 4,
+    left: mapTheme.spacing.lg * 4,
+    right: mapTheme.spacing.lg,
+    zIndex: 10,
+  },
+  searchBarInput: {
+    backgroundColor: mapTheme.colors.background,
+    borderRadius: mapTheme.borderRadius.sm,
+    borderWidth: 1,
+    borderColor: mapTheme.colors.border,
+    paddingHorizontal: mapTheme.spacing.lg,
+    paddingVertical: mapTheme.spacing.md,
+    fontSize: mapTheme.fontSize.md,
+    color: mapTheme.colors.text,
   },
 });

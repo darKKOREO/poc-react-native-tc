@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		31EBC77FAEBEEF8A258E27EE /* libPods-MyTVApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA3113F064E36FF50B40515 /* libPods-MyTVApp.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		4C5CD9EE2AE0ABF18C140A7C /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18682A4CA4017E41E964086E /* ExpoModulesProvider.swift */; };
+		784A17D37B9A1BCD5198D918 /* libPods-MyTVApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5831B7E3994B2EA55AF6A94 /* libPods-MyTVApp.a */; };
+		7F2A09658E00F54EE61E7EFB /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E7AC9361E4F2A5991B60E3 /* ExpoModulesProvider.swift */; };
+		AC6F8EBBB8AE8F266A5E41F4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D404DDDCF9EC81C6B838782A /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		EA1E91AA718F18014C46D467 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 34CD8CCDDA607C7F184529EB /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,13 +20,13 @@
 		13B07F961A680F5B00A75B9A /* MyTVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyTVApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MyTVApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MyTVApp/Info.plist; sourceTree = "<group>"; };
-		18682A4CA4017E41E964086E /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MyTVApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		34CD8CCDDA607C7F184529EB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = MyTVApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		3EA1AEE854A965B65F9D6000 /* Pods-MyTVApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTVApp.debug.xcconfig"; path = "Target Support Files/Pods-MyTVApp/Pods-MyTVApp.debug.xcconfig"; sourceTree = "<group>"; };
-		4DC71AAC276EF4CA2E4F0A51 /* Pods-MyTVApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTVApp.release.xcconfig"; path = "Target Support Files/Pods-MyTVApp/Pods-MyTVApp.release.xcconfig"; sourceTree = "<group>"; };
+		61E7AC9361E4F2A5991B60E3 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MyTVApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		71D7C61901D5633AB0A71C3D /* Pods-MyTVApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTVApp.release.xcconfig"; path = "Target Support Files/Pods-MyTVApp/Pods-MyTVApp.release.xcconfig"; sourceTree = "<group>"; };
+		86BF0B59ED8C8BE88B0DAC22 /* Pods-MyTVApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTVApp.debug.xcconfig"; path = "Target Support Files/Pods-MyTVApp/Pods-MyTVApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = MyTVApp/SplashScreen.storyboard; sourceTree = "<group>"; };
-		AAA3113F064E36FF50B40515 /* libPods-MyTVApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyTVApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		D404DDDCF9EC81C6B838782A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = MyTVApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		E5831B7E3994B2EA55AF6A94 /* libPods-MyTVApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyTVApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MyTVApp/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* MyTVApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MyTVApp-Bridging-Header.h"; path = "MyTVApp/MyTVApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31EBC77FAEBEEF8A258E27EE /* libPods-MyTVApp.a in Frameworks */,
+				784A17D37B9A1BCD5198D918 /* libPods-MyTVApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,36 +53,26 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				34CD8CCDDA607C7F184529EB /* PrivacyInfo.xcprivacy */,
+				D404DDDCF9EC81C6B838782A /* PrivacyInfo.xcprivacy */,
 			);
 			name = MyTVApp;
+			sourceTree = "<group>";
+		};
+		25E30D34170459D93A21E309 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				F2A2960EEB7909B1C187881F /* MyTVApp */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				AAA3113F064E36FF50B40515 /* libPods-MyTVApp.a */,
+				E5831B7E3994B2EA55AF6A94 /* libPods-MyTVApp.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		6CE84191EEFA1505AD44FAE3 /* MyTVApp */ = {
-			isa = PBXGroup;
-			children = (
-				18682A4CA4017E41E964086E /* ExpoModulesProvider.swift */,
-			);
-			name = MyTVApp;
-			sourceTree = "<group>";
-		};
-		7FC217BEB8E1DFD63B1BF640 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3EA1AEE854A965B65F9D6000 /* Pods-MyTVApp.debug.xcconfig */,
-				4DC71AAC276EF4CA2E4F0A51 /* Pods-MyTVApp.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -99,8 +89,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				7FC217BEB8E1DFD63B1BF640 /* Pods */,
-				B043BB806648AD557EC2A264 /* ExpoModulesProviders */,
+				8A6DEF2224C5B701F4633DEF /* Pods */,
+				25E30D34170459D93A21E309 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -115,12 +105,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B043BB806648AD557EC2A264 /* ExpoModulesProviders */ = {
+		8A6DEF2224C5B701F4633DEF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6CE84191EEFA1505AD44FAE3 /* MyTVApp */,
+				86BF0B59ED8C8BE88B0DAC22 /* Pods-MyTVApp.debug.xcconfig */,
+				71D7C61901D5633AB0A71C3D /* Pods-MyTVApp.release.xcconfig */,
 			);
-			name = ExpoModulesProviders;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -132,6 +124,14 @@
 			path = MyTVApp/Supporting;
 			sourceTree = "<group>";
 		};
+		F2A2960EEB7909B1C187881F /* MyTVApp */ = {
+			isa = PBXGroup;
+			children = (
+				61E7AC9361E4F2A5991B60E3 /* ExpoModulesProvider.swift */,
+			);
+			name = MyTVApp;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,23 +140,19 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MyTVApp" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				DD51DDD7CBE24E323368AF38 /* [Expo] Configure project */,
+				DB6AFE66EC13160781CA16FC /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				11CE138644A6517AAC2FEBC3 /* [CP] Embed Pods Frameworks */,
-				F98952DDA6E6E692F88C6C68 /* [MapLibre React Native] Remove MapLibre.xcframework-ios.signature */,
+				768A3A60CCA9BD8BCD08C14A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MyTVApp;
-			packageProductDependencies = (
-				60D50C0C40AB9E1F37EF2458 /* MapLibre */,
-			);
 			productName = MyTVApp;
 			productReference = 13B07F961A680F5B00A75B9A /* MyTVApp.app */;
 			productType = "com.apple.product-type.application";
@@ -183,9 +179,6 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
-			packageReferences = (
-				4A843C2B05F91FCF68C002CA /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
-			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -203,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				EA1E91AA718F18014C46D467 /* PrivacyInfo.xcprivacy in Resources */,
+				AC6F8EBBB8AE8F266A5E41F4 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,29 +242,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		11CE138644A6517AAC2FEBC3 /* [CP] Embed Pods Frameworks */ = {
+		768A3A60CCA9BD8BCD08C14A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MyTVApp/Pods-MyTVApp-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem.framework/ExpoFileSystem",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ExpoFont/ExpoFont.framework/ExpoFont",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ExpoModulesCore/ExpoModulesCore.framework/ExpoModulesCore",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ExpoModulesJSI/ExpoModulesJSI.framework/ExpoModulesJSI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ExpoModulesWorklets/ExpoModulesWorklets.framework/ExpoModulesWorklets",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermesvm.framework/hermesvm",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpoFileSystem.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpoFont.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpoModulesCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpoModulesJSI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpoModulesWorklets.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermesvm.framework",
@@ -309,7 +294,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyTVApp/Pods-MyTVApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DD51DDD7CBE24E323368AF38 /* [Expo] Configure project */ = {
+		DB6AFE66EC13160781CA16FC /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -333,25 +318,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-MyTVApp/expo-configure-project.sh\"\n";
 		};
-		F98952DDA6E6E692F88C6C68 /* [MapLibre React Native] Remove MapLibre.xcframework-ios.signature */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[MapLibre React Native] Remove MapLibre.xcframework-ios.signature";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "rm -rf \"$CONFIGURATION_BUILD_DIR/MapLibre.xcframework-ios.signature\"";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -360,7 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				4C5CD9EE2AE0ABF18C140A7C /* ExpoModulesProvider.swift in Sources */,
+				7F2A09658E00F54EE61E7EFB /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +335,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3EA1AEE854A965B65F9D6000 /* Pods-MyTVApp.debug.xcconfig */;
+			baseConfigurationReference = 86BF0B59ED8C8BE88B0DAC22 /* Pods-MyTVApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -396,17 +362,19 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anonymous.MyTVApp;
 				PRODUCT_NAME = MyTVApp;
+				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = "MyTVApp/MyTVApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.4;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4DC71AAC276EF4CA2E4F0A51 /* Pods-MyTVApp.release.xcconfig */;
+			baseConfigurationReference = 71D7C61901D5633AB0A71C3D /* Pods-MyTVApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -428,9 +396,11 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anonymous.MyTVApp;
 				PRODUCT_NAME = MyTVApp;
+				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = "MyTVApp/MyTVApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.4;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -499,7 +469,7 @@
 					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
-				SDKROOT = iphoneos;
+				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				USE_HERMES = true;
@@ -562,7 +532,7 @@
 					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
-				SDKROOT = iphoneos;
+				SDKROOT = appletvos;
 				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
@@ -591,25 +561,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		4A843C2B05F91FCF68C002CA /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/maplibre/maplibre-gl-native-distribution";
-			requirement = {
-				kind = exactVersion;
-				version = 6.26.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		60D50C0C40AB9E1F37EF2458 /* MapLibre */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4A843C2B05F91FCF68C002CA /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
-			productName = MapLibre;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
