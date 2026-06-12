@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView, findNodeHandle } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { FocusableItem } from '../../components/FocusableItem';
@@ -20,6 +20,23 @@ export const WelcomeScreen: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [dataExists, setDataExists] = useState(false);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
+  const railRef = useRef<ScrollView>(null);
+  const syncRef = useRef<View>(null);
+  const browseRef = useRef<View>(null);
+  const mapRef = useRef<View>(null);
+
+  const scrollItemIntoView = (itemRef: React.RefObject<View | null>) => {
+    const rail = railRef.current;
+    const item = itemRef.current;
+    if (!rail || !item) return;
+    const railHandle = findNodeHandle(rail);
+    if (!railHandle) return;
+    item.measureLayout(
+      railHandle,
+      x => rail.scrollTo({ x: Math.max(0, x - theme.spacing.lg), animated: true }),
+      () => {},
+    );
+  };
 
   useEffect(() => {
     hasShows().then(setDataExists);
@@ -64,44 +81,58 @@ export const WelcomeScreen: React.FC = () => {
           </Text>
         </View>
       ) : (
-        <View style={styles.buttonRow}>
-          <FocusableItem
-            hasTVPreferredFocus={!dataExists}
-            onPress={handleSync}
-            style={styles.button}
-          >
-            {({ focused }) => (
-              <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
-                {syncState === 'done' ? 'Sync Again' : 'Sync Data'}
-              </Text>
-            )}
-          </FocusableItem>
-
-          {dataExists && (
+        <ScrollView
+          ref={railRef}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.buttonRow}
+        >
+          <View ref={syncRef} collapsable={false}>
             <FocusableItem
-              hasTVPreferredFocus
-              onPress={() => navigation.navigate('Dashboard')}
+              hasTVPreferredFocus={!dataExists}
+              onPress={handleSync}
+              onFocus={() => scrollItemIntoView(syncRef)}
               style={styles.button}
             >
               {({ focused }) => (
                 <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
-                  Browse
+                  {syncState === 'done' ? 'Sync Again' : 'Sync Data'}
                 </Text>
               )}
             </FocusableItem>
+          </View>
+
+          {dataExists && (
+            <View ref={browseRef} collapsable={false}>
+              <FocusableItem
+                hasTVPreferredFocus
+                onPress={() => navigation.navigate('Dashboard')}
+                onFocus={() => scrollItemIntoView(browseRef)}
+                style={styles.button}
+              >
+                {({ focused }) => (
+                  <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
+                    Browse
+                  </Text>
+                )}
+              </FocusableItem>
+            </View>
           )}
 
-          <FocusableItem
-            onPress={() => navigation.navigate('MapProject')}
-            style={styles.button}
-          >
-            {({ focused }) => (
-              <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
-                Map Demo
-              </Text>
-            )}
-          </FocusableItem>
-        </View>
+          <View ref={mapRef} collapsable={false}>
+            <FocusableItem
+              onPress={() => navigation.navigate('MapProject')}
+              onFocus={() => scrollItemIntoView(mapRef)}
+              style={styles.button}
+            >
+              {({ focused }) => (
+                <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
+                  Map Demo
+                </Text>
+              )}
+            </FocusableItem>
+          </View>
+        </ScrollView>
       )}
 
       {syncState === 'done' && (
@@ -136,6 +167,8 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     gap: theme.spacing.md,
+    paddingHorizontal: theme.spacing.lg,
+    height: 100,
   },
   button: {
     paddingHorizontal: theme.spacing.xl,

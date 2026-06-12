@@ -1,22 +1,22 @@
-import RNFS from '@dr.pogodin/react-native-fs';
+import { DocumentDirectoryPath, downloadFile, exists, mkdir } from '@dr.pogodin/react-native-fs';
 import { Show } from './api';
 
 export type CachedShow = Show & { localImageUri: string | null };
 
-const IMAGE_DIR = RNFS.DocumentDirectoryPath + '/show_images/';
+const IMAGE_DIR = DocumentDirectoryPath + '/show_images/';
 
 const ensureDir = async () => {
-  const exists = await RNFS.exists(IMAGE_DIR);
-  if (!exists) {
-    await RNFS.mkdir(IMAGE_DIR);
+  const dirExists = await exists(IMAGE_DIR);
+  if (!dirExists) {
+    await mkdir(IMAGE_DIR);
   }
 };
 
 const downloadOne = async (showId: number, url: string): Promise<string> => {
   const path = IMAGE_DIR + showId + '.jpg';
-  const exists = await RNFS.exists(path);
-  if (!exists) {
-    await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+  const fileExists = await exists(path);
+  if (!fileExists) {
+    await downloadFile({ fromUrl: url, toFile: path }).promise;
   }
   return 'file://' + path;
 };
