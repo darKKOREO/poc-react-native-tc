@@ -15,14 +15,17 @@ A React Native TV app POC targeting tvOS, Android TV, Tizen (Samsung), and webOS
 npm install
 
 # iOS — install pods after npm install or when adding native packages
-cd ios && pod install && cd ..
+cd ios && bundle install && bundle exec pod install && cd ..
 # Requires Xcode 16.1+ and macOS 14.5+
 
 # Start Metro bundler (Fast Refresh — use after first build)
-npx expo start
+npx react-native start
 
 # Full native build + install on Android TV emulator (required after adding native packages)
-npx expo run:android
+npx react-native run-android
+
+# Full native build + install on iOS simulator (required after adding native packages)
+npx react-native run-ios
 
 # Web bundle for Tizen / webOS
 bash src/platforms/web/build-web.sh
@@ -38,7 +41,7 @@ npm run format
 npx tsc --noEmit
 ```
 
-**Development workflow:** Run `npx expo run:android` once to build and install. After that, use `npx expo start` — saving any JS/TS file triggers Fast Refresh automatically. Only rebuild with `npx expo run:android` when adding native packages or changing `android/` files.
+**Development workflow:** Run `npx react-native run-android` (or `run-ios`) once to build and install. After that, use `npx react-native start` — saving any JS/TS file triggers Fast Refresh automatically. Only rebuild with `run-android`/`run-ios` when adding native packages or changing `android/`/`ios/` files.
 
 ## Architecture
 
@@ -55,6 +58,7 @@ src/
   services/
     api.ts            # TVMaze fetch via axios; logs request/response to Reactotron via tron()
     storage.ts        # AsyncStorage wrapper: saveShows / loadShows / hasShows
+    imageDownloader.ts # Downloads show images to disk via @dr.pogodin/react-native-fs for offline caching
   hooks/
     useTVRemote.ts    # Unified D-pad input: keyboard events on web, useTVEventHandler on tvOS/Android TV
   utils/
@@ -73,8 +77,10 @@ src/
 - **HTTP client is `axios`, not `fetch`**: `fetch` in React Native 0.85 + Hermes is native and bypasses JS-layer interceptors. Axios uses `XMLHttpRequest` and is required for Reactotron network logging to work.
 - **Reactotron network logging is manual**: Reactotron's built-in Network tab does not capture requests (Hermes incompatibility). Network calls are logged explicitly via `tron()` in `src/services/api.ts` using `Reactotron.display()`, which shows in the Timeline tab.
 - **Navigation**: `RootStackParamList` is defined in `src/navigation/index.tsx`. Add new screen types there when adding screens.
-- **Path alias**: `@/*` maps to `src/*` (tsconfig paths).
-- **iOS uses Expo autolinking**: The Podfile uses `use_expo_modules!` and Expo's autolinking unless `EXPO_USE_COMMUNITY_AUTOLINKING=1` is set.
+- **Path alias**: `@/*` maps to `src/*` — configured via `babel-plugin-module-resolver` in `babel.config.js` (and mirrored in `tsconfig.json` for the type checker).
+- **Bare React Native CLI**: This is a bare RN CLI project (no Expo). iOS dependencies are managed via CocoaPods through Bundler (`Gemfile` / `bundle exec pod install`); Android autolinking is the standard `@react-native-community/cli` autolinking.
+- **`react-native` is aliased to `react-native-tvos`**: `package.json` aliases `react-native` to `npm:react-native-tvos@^0.85.3-0`. `react-native-tvos` bundles its own nested copy of plain `react-native` for its internal deps — `metro.config.js` overrides `resolver.resolveRequest` to force every `react-native`/`react-native/*` import to resolve to the single top-level `node_modules/react-native` (react-native-tvos), preventing duplicate module instances. Do not remove this override.
+- **New Architecture (Fabric/TurboModules) + Hermes** are enabled by default (`android/gradle.properties`: `newArchEnabled=true`, `hermesEnabled=true`; iOS `Info.plist`: `RCTNewArchEnabled: true`).
 - **Multi-platform targeting**: Use `Platform.OS` and flags in `src/utils/platform.ts` for platform branches — never hardcode platform strings.
 
 ## Debugging

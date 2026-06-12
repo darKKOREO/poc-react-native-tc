@@ -1,23 +1,24 @@
-import * as FileSystem from 'expo-file-system/legacy';
+import RNFS from '@dr.pogodin/react-native-fs';
 import { Show } from './api';
 
 export type CachedShow = Show & { localImageUri: string | null };
 
-const IMAGE_DIR = FileSystem.documentDirectory + 'show_images/';
+const IMAGE_DIR = RNFS.DocumentDirectoryPath + '/show_images/';
 
 const ensureDir = async () => {
-  const info = await FileSystem.getInfoAsync(IMAGE_DIR);
-  if (!info.exists) {
-    await FileSystem.makeDirectoryAsync(IMAGE_DIR, { intermediates: true });
+  const exists = await RNFS.exists(IMAGE_DIR);
+  if (!exists) {
+    await RNFS.mkdir(IMAGE_DIR);
   }
 };
 
 const downloadOne = async (showId: number, url: string): Promise<string> => {
   const path = IMAGE_DIR + showId + '.jpg';
-  const info = await FileSystem.getInfoAsync(path);
-  if (info.exists) return path;
-  const result = await FileSystem.downloadAsync(url, path);
-  return result.uri;
+  const exists = await RNFS.exists(path);
+  if (!exists) {
+    await RNFS.downloadFile({ fromUrl: url, toFile: path }).promise;
+  }
+  return 'file://' + path;
 };
 
 export const downloadAllImages = async (

@@ -11,9 +11,30 @@ local.properties
 *.iml
 *.hprof
 .cxx/
+*.keystore
+!debug.keystore
 
-# generated inline modules
-app/src/main/java/inline/
+# node.js
+#
+node_modules/
+npm-debug.log
+yarn-error.log
 
-# Bundle artifacts
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# Bundle artifact
 *.jsbundle
+
+# Ruby / CocoaPods
+**/Pods/
+/vendor/bundle/

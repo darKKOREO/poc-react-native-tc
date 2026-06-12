@@ -1,11 +1,4 @@
 {
   "name": "MyTVApp",
-  "slug": "MyTVApp",
-  "android": {
-    "package": "com.anonymous.MyTVApp"
-  },
-  "ios": {
-    "bundleIdentifier": "com.anonymous.MyTVApp"
-  },
-  "plugins": ["@react-native-tvos/config-tv"]
+  "displayName": "MyTVApp"
 }
