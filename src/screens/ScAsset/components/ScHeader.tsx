@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: scTheme.spacing.xl,
-    paddingVertical: scTheme.spacing.md,
+    paddingVertical: scTheme.spacing.xl,
   },
   logo: {
     color: scTheme.colors.primary,

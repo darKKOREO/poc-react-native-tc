@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,32 +6,43 @@ import {
   Pressable,
   ScrollView,
   ImageBackground,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation';
-import { ScHeader } from './components/ScHeader';
-import { ProjectCard } from './components/ProjectCard';
-import { SC_PROJECTS, formatPriceThai } from './data';
-import { scTheme } from './theme';
+  useWindowDimensions,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../navigation";
+import { ScHeader } from "./components/ScHeader";
+import { ProjectCard } from "./components/ProjectCard";
+import { SC_PROJECTS, formatPriceThai } from "./data";
+import { scTheme } from "./theme";
 
-type Nav = NativeStackNavigationProp<RootStackParamList, 'ScPresent'>;
+type Nav = NativeStackNavigationProp<RootStackParamList, "ScPresent">;
 
 export const ScPresentScreen: React.FC = () => {
   const navigation = useNavigation<Nav>();
   const [projectIndex, setProjectIndex] = useState(0);
   const [liked, setLiked] = useState(false);
 
+  const { height } = useWindowDimensions();
+
   const project = SC_PROJECTS[projectIndex];
-  const suggestions = SC_PROJECTS.filter(p => p.id !== project.id).slice(0, 3);
+  const suggestions = SC_PROJECTS.filter((p) => p.id !== project.id).slice(
+    0,
+    3,
+  );
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Pressable
-          onPress={() => navigation.navigate('ScProjectDetail', { projectId: project.id })}
+          onPress={() =>
+            navigation.navigate("ScProjectDetail", { projectId: project.id })
+          }
         >
-          <ImageBackground source={{ uri: project.imageUrl }} style={styles.hero}>
+          <ImageBackground
+            source={{ uri: project.imageUrl }}
+            style={[styles.hero, { height: height / 1.5 }]}
+          >
             <View style={styles.heroOverlay}>
               <ScHeader active="Present" variant="dark" />
 
@@ -49,7 +60,10 @@ export const ScPresentScreen: React.FC = () => {
                       key={p.id}
                       onPress={() => setProjectIndex(i)}
                       hitSlop={8}
-                      style={[styles.dot, i === projectIndex && styles.dotActive]}
+                      style={[
+                        styles.dot,
+                        i === projectIndex && styles.dotActive,
+                      ]}
                     />
                   ))}
                 </View>
@@ -61,8 +75,12 @@ export const ScPresentScreen: React.FC = () => {
         <View style={styles.body}>
           <View style={styles.priceColumn}>
             <Text style={styles.priceLabel}>ราคาเริ่มต้น</Text>
-            <Text style={styles.price}>{formatPriceThai(project.priceFrom)}</Text>
-            <Text style={styles.priceMax}>~ {formatPriceThai(project.priceTo)}</Text>
+            <Text style={styles.price}>
+              {formatPriceThai(project.priceFrom)}
+            </Text>
+            <Text style={styles.priceMax}>
+              ~ {formatPriceThai(project.priceTo)}
+            </Text>
 
             <View style={styles.specsRow}>
               <View style={styles.specCell}>
@@ -82,23 +100,30 @@ export const ScPresentScreen: React.FC = () => {
             <View style={styles.ctaRow}>
               <Pressable
                 style={styles.cta}
-                onPress={() => navigation.navigate('ScRegister', { projectId: project.id })}
+                onPress={() =>
+                  navigation.navigate("ScRegister", { projectId: project.id })
+                }
               >
                 <Text style={styles.ctaText}>นำเสนอโครงการนี้</Text>
               </Pressable>
-              <Pressable style={styles.heartButton} onPress={() => setLiked(!liked)}>
-                <Text style={styles.heartText}>{liked ? '❤️' : '♡'}</Text>
+              <Pressable
+                style={styles.heartButton}
+                onPress={() => setLiked(!liked)}
+              >
+                <Text style={styles.heartText}>{liked ? "❤️" : "♡"}</Text>
               </Pressable>
             </View>
           </View>
 
           <View style={styles.sideColumn}>
             <Text style={styles.sideTitle}>โครงการอื่นๆ ที่น่าสนใจ</Text>
-            {suggestions.map(p => (
+            {suggestions.map((p) => (
               <ProjectCard
                 key={p.id}
                 project={p}
-                onPress={() => setProjectIndex(SC_PROJECTS.findIndex(sp => sp.id === p.id))}
+                onPress={() =>
+                  setProjectIndex(SC_PROJECTS.findIndex((sp) => sp.id === p.id))
+                }
               />
             ))}
           </View>
@@ -117,13 +142,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   hero: {
-    height: 520,
+    width: "100%",
     backgroundColor: scTheme.colors.text,
   },
   heroOverlay: {
     flex: 1,
     backgroundColor: scTheme.colors.heroOverlay,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   heroBottom: {
     paddingHorizontal: scTheme.spacing.xl,
@@ -131,28 +156,28 @@ const styles = StyleSheet.create({
     gap: scTheme.spacing.sm,
   },
   newTag: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.6)',
+    borderColor: "rgba(255,255,255,0.6)",
     borderRadius: scTheme.borderRadius.pill,
     paddingHorizontal: scTheme.spacing.md,
     paddingVertical: 3,
   },
   newTagText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: scTheme.fontSize.xs,
   },
   heroTitle: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: scTheme.fontSize.display,
-    fontWeight: '800',
+    fontWeight: "800",
   },
   heroSubtitle: {
-    color: 'rgba(255,255,255,0.85)',
+    color: "rgba(255,255,255,0.85)",
     fontSize: scTheme.fontSize.md,
   },
   dots: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: scTheme.spacing.sm,
     marginTop: scTheme.spacing.sm,
   },
@@ -160,7 +185,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'rgba(255,255,255,0.4)',
+    backgroundColor: "rgba(255,255,255,0.4)",
   },
   dotActive: {
     backgroundColor: scTheme.colors.primary,
@@ -168,7 +193,7 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: scTheme.spacing.xl,
     paddingHorizontal: scTheme.spacing.xl,
     paddingVertical: scTheme.spacing.lg,
@@ -184,14 +209,14 @@ const styles = StyleSheet.create({
   price: {
     color: scTheme.colors.primary,
     fontSize: scTheme.fontSize.xxl,
-    fontWeight: '800',
+    fontWeight: "800",
   },
   priceMax: {
     color: scTheme.colors.textSecondary,
     fontSize: scTheme.fontSize.sm,
   },
   specsRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: scTheme.colors.surface,
     borderRadius: scTheme.borderRadius.md,
     borderWidth: 1,
@@ -201,7 +226,7 @@ const styles = StyleSheet.create({
   },
   specCell: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     gap: 2,
   },
   specCellDivider: {
@@ -216,11 +241,11 @@ const styles = StyleSheet.create({
   specValue: {
     color: scTheme.colors.text,
     fontSize: scTheme.fontSize.sm,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   ctaRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: scTheme.spacing.md,
     marginTop: scTheme.spacing.lg,
   },
@@ -229,12 +254,12 @@ const styles = StyleSheet.create({
     backgroundColor: scTheme.colors.primary,
     borderRadius: scTheme.borderRadius.pill,
     paddingVertical: scTheme.spacing.md,
-    alignItems: 'center',
+    alignItems: "center",
   },
   ctaText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: scTheme.fontSize.md,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   heartButton: {
     width: 52,
@@ -243,8 +268,8 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: scTheme.colors.border,
     backgroundColor: scTheme.colors.surface,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   heartText: {
     fontSize: scTheme.fontSize.lg,
@@ -257,6 +282,6 @@ const styles = StyleSheet.create({
   sideTitle: {
     color: scTheme.colors.text,
     fontSize: scTheme.fontSize.md,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 });
