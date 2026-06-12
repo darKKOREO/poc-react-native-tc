@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Pressable,
   ScrollView,
-  ImageBackground,
+  Animated,
+  PanResponder,
   useWindowDimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -22,55 +23,97 @@ export const ScPresentScreen: React.FC = () => {
   const navigation = useNavigation<Nav>();
   const [projectIndex, setProjectIndex] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [imageIndex, setImageIndex] = useState(0);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const { height } = useWindowDimensions();
 
   const project = SC_PROJECTS[projectIndex];
+  const gallery = project.gallery.length ? project.gallery : [project.imageUrl];
   const suggestions = SC_PROJECTS.filter((p) => p.id !== project.id).slice(
     0,
     3,
   );
 
+  useEffect(() => {
+    setImageIndex(0);
+    fadeAnim.setValue(1);
+  }, [project.id]);
+
+  const showImage = (direction: 1 | -1) => {
+    if (gallery.length <= 1) return;
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      setImageIndex(
+        (prev) => (prev + direction + gallery.length) % gallery.length,
+      );
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    });
+  };
+
+  const showImageRef = useRef(showImage);
+  showImageRef.current = showImage;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gesture) =>
+        Math.abs(gesture.dx) > 10 &&
+        Math.abs(gesture.dx) > Math.abs(gesture.dy),
+      onPanResponderRelease: (_, gesture) => {
+        if (gesture.dx <= -50) showImageRef.current(1);
+        else if (gesture.dx >= 50) showImageRef.current(-1);
+      },
+    }),
+  ).current;
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <Pressable
-          onPress={() =>
-            navigation.navigate("ScProjectDetail", { projectId: project.id })
-          }
+        <View
+          style={[styles.hero, { height: height / 1.5 }]}
+          {...panResponder.panHandlers}
         >
-          <ImageBackground
-            source={{ uri: project.imageUrl }}
-            style={[styles.hero, { height: height / 1.5 }]}
+          <Animated.Image
+            source={{ uri: gallery[imageIndex] }}
+            style={[StyleSheet.absoluteFill, { opacity: fadeAnim }]}
+            resizeMode="cover"
+          />
+          <Pressable
+            style={styles.heroOverlay}
+            onPress={() =>
+              navigation.navigate("ScProjectDetail", { projectId: project.id })
+            }
           >
-            <View style={styles.heroOverlay}>
-              <ScHeader active="Present" variant="dark" />
+            <ScHeader active="Present" variant="dark" />
 
-              <View style={styles.heroBottom}>
-                <View style={styles.newTag}>
-                  <Text style={styles.newTagText}>โครงการ{project.tag}</Text>
-                </View>
-                <Text style={styles.heroTitle}>{project.name}</Text>
-                <Text style={styles.heroSubtitle}>
-                  {project.type} • {project.location}
-                </Text>
+            <View style={styles.heroBottom}>
+              <View style={styles.newTag}>
+                <Text style={styles.newTagText}>โครงการ{project.tag}</Text>
+              </View>
+              <Text style={styles.heroTitle}>{project.name}</Text>
+              <Text style={styles.heroSubtitle}>
+                {project.type} • {project.location}
+              </Text>
+              {gallery.length > 1 && (
                 <View style={styles.dots}>
-                  {SC_PROJECTS.slice(0, 4).map((p, i) => (
-                    <Pressable
-                      key={p.id}
-                      onPress={() => setProjectIndex(i)}
-                      hitSlop={8}
-                      style={[
-                        styles.dot,
-                        i === projectIndex && styles.dotActive,
-                      ]}
+                  {gallery.map((_, i) => (
+                    <View
+                      key={i}
+                      style={[styles.dot, i === imageIndex && styles.dotActive]}
                     />
                   ))}
                 </View>
-              </View>
+              )}
             </View>
-          </ImageBackground>
-        </Pressable>
+          </Pressable>
+        </View>
 
         <View style={styles.body}>
           <View style={styles.priceColumn}>

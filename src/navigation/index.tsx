@@ -39,7 +39,11 @@ export const AppNavigator: React.FC = () => (
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
       <Stack.Screen name="MapProject" component={MapProjectScreen} />
-      <Stack.Screen name="ScPresent" component={ScPresentScreen} />
+      <Stack.Screen
+        name="ScPresent"
+        component={ScPresentScreen}
+        options={{ gestureEnabled: false }}
+      />
       <Stack.Screen name="ScConsult" component={ScConsultScreen} />
       <Stack.Screen name="ScBrowse" component={ScBrowseScreen} />
       <Stack.Screen name="ScRegister" component={ScRegisterScreen} />
