@@ -5,6 +5,11 @@ import { WelcomeScreen } from '../screens/Welcome';
 import { HomeScreen } from '../screens/Home';
 import { DashboardScreen } from '../screens/Dashboard';
 import { MapProjectScreen } from '../screens/MapProject';
+import { ScPresentScreen } from '../screens/ScAsset/PresentScreen';
+import { ScProjectDetailScreen } from '../screens/ScAsset/ProjectDetailScreen';
+import { ScRegisterScreen } from '../screens/ScAsset/RegisterScreen';
+import { ScConsultScreen } from '../screens/ScAsset/ConsultScreen';
+import { ScBrowseScreen } from '../screens/ScAsset/BrowseScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -13,6 +18,11 @@ export type RootStackParamList = {
   Detail: { id: string };
   Player: { url: string };
   MapProject: undefined;
+  ScPresent: undefined;
+  ScConsult: undefined;
+  ScBrowse: undefined;
+  ScRegister: { projectId?: string } | undefined;
+  ScProjectDetail: { projectId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,6 +39,11 @@ export const AppNavigator: React.FC = () => (
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
       <Stack.Screen name="MapProject" component={MapProjectScreen} />
+      <Stack.Screen name="ScPresent" component={ScPresentScreen} />
+      <Stack.Screen name="ScConsult" component={ScConsultScreen} />
+      <Stack.Screen name="ScBrowse" component={ScBrowseScreen} />
+      <Stack.Screen name="ScRegister" component={ScRegisterScreen} />
+      <Stack.Screen name="ScProjectDetail" component={ScProjectDetailScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );

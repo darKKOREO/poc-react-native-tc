@@ -24,6 +24,7 @@ export const WelcomeScreen: React.FC = () => {
   const syncRef = useRef<View>(null);
   const browseRef = useRef<View>(null);
   const mapRef = useRef<View>(null);
+  const scAssetRef = useRef<View>(null);
 
   const scrollItemIntoView = (itemRef: React.RefObject<View | null>) => {
     const rail = railRef.current;
@@ -128,6 +129,20 @@ export const WelcomeScreen: React.FC = () => {
               {({ focused }) => (
                 <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
                   Map Demo
+                </Text>
+              )}
+            </FocusableItem>
+          </View>
+
+          <View ref={scAssetRef} collapsable={false}>
+            <FocusableItem
+              onPress={() => navigation.navigate('ScPresent')}
+              onFocus={() => scrollItemIntoView(scAssetRef)}
+              style={styles.button}
+            >
+              {({ focused }) => (
+                <Text style={[styles.buttonText, focused && styles.buttonTextFocused]}>
+                  SC Asset
                 </Text>
               )}
             </FocusableItem>
