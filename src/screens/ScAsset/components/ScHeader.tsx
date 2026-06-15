@@ -1,44 +1,62 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation';
-import { scTheme } from '../theme';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../navigation";
+import { Focusable } from "../../../components/Focusable";
+import { scTheme, scFocusOutline } from "../theme";
 
-export type ScTab = 'Present' | 'Consult' | 'Browse' | 'Register' | 'Control Center';
+export type ScTab =
+  | "Present"
+  | "Consult"
+  | "Browse"
+  | "Register"
+  | "Control Center";
 
 type ScNav = NativeStackNavigationProp<RootStackParamList>;
 
 const TAB_ROUTES: Partial<Record<ScTab, keyof RootStackParamList>> = {
-  Present: 'ScPresent',
-  Consult: 'ScConsult',
-  Browse: 'ScBrowse',
-  Register: 'ScRegister',
+  Present: "ScPresent",
+  Consult: "ScConsult",
+  Browse: "ScBrowse",
+  Register: "ScRegister",
 };
 
 type Props = {
   active: ScTab;
   /** 'dark' = translucent pills over the hero image; 'light' = on cream background */
-  variant?: 'dark' | 'light';
+  variant?: "dark" | "light";
   tabs?: ScTab[];
 };
 
-const DEFAULT_TABS: ScTab[] = ['Present', 'Consult', 'Browse', 'Register', 'Control Center'];
+const DEFAULT_TABS: ScTab[] = [
+  "Present",
+  "Consult",
+  "Browse",
+  "Register",
+  "Control Center",
+];
 
-export const ScHeader: React.FC<Props> = ({ active, variant = 'light', tabs = DEFAULT_TABS }) => {
+export const ScHeader: React.FC<Props> = ({
+  active,
+  variant = "light",
+  tabs = DEFAULT_TABS,
+}) => {
   const navigation = useNavigation<ScNav>();
-  const dark = variant === 'dark';
+  const dark = variant === "dark";
 
   return (
     <View style={styles.row}>
       <Text style={styles.logo}>SC ASSET</Text>
       <View style={styles.tabs}>
-        {tabs.map(tab => {
+        {tabs.map((tab) => {
           const isActive = tab === active;
           const route = TAB_ROUTES[tab];
+          const isFirstFocusable = !isActive && tab === tabs.find((t) => t !== active);
           return (
-            <Pressable
+            <Focusable
               key={tab}
+              hasTVPreferredFocus={isFirstFocusable}
               disabled={isActive || !route}
               onPress={() => route && navigation.navigate(route as never)}
               style={[
@@ -46,6 +64,7 @@ export const ScHeader: React.FC<Props> = ({ active, variant = 'light', tabs = DE
                 dark ? styles.tabDark : styles.tabLight,
                 isActive && styles.tabActive,
               ]}
+              focusedStyle={scFocusOutline}
             >
               <Text
                 style={[
@@ -56,7 +75,7 @@ export const ScHeader: React.FC<Props> = ({ active, variant = 'light', tabs = DE
               >
                 {tab}
               </Text>
-            </Pressable>
+            </Focusable>
           );
         })}
       </View>
@@ -66,23 +85,23 @@ export const ScHeader: React.FC<Props> = ({ active, variant = 'light', tabs = DE
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: scTheme.spacing.xl,
     paddingVertical: scTheme.spacing.xl,
   },
   logo: {
     color: scTheme.colors.primary,
     fontSize: scTheme.fontSize.lg,
-    fontWeight: '800',
+    fontWeight: "800",
     letterSpacing: 3,
   },
   tabs: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-end",
     gap: scTheme.spacing.sm,
     marginLeft: scTheme.spacing.md,
   },
@@ -102,15 +121,15 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: scTheme.fontSize.sm,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   tabTextDark: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
   },
   tabTextLight: {
     color: scTheme.colors.textSecondary,
   },
   tabTextActive: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
   },
 });

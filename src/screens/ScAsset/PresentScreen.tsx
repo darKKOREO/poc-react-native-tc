@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Pressable,
   ScrollView,
   Animated,
   PanResponder,
@@ -12,10 +11,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation";
+import { Focusable } from "../../components/Focusable";
 import { ScHeader } from "./components/ScHeader";
 import { ProjectCard } from "./components/ProjectCard";
 import { SC_PROJECTS, formatPriceThai } from "./data";
-import { scTheme } from "./theme";
+import { scTheme, scFocusRing, scFocusOutline } from "./theme";
 
 type Nav = NativeStackNavigationProp<RootStackParamList, "ScPresent">;
 
@@ -85,15 +85,16 @@ export const ScPresentScreen: React.FC = () => {
             style={[StyleSheet.absoluteFill, { opacity: fadeAnim }]}
             resizeMode="cover"
           />
-          <Pressable
-            style={styles.heroOverlay}
-            onPress={() =>
-              navigation.navigate("ScProjectDetail", { projectId: project.id })
-            }
-          >
+          <View style={styles.heroOverlay}>
             <ScHeader active="Present" variant="dark" />
 
-            <View style={styles.heroBottom}>
+            <Focusable
+              style={styles.heroBottom}
+              focusedStyle={scFocusOutline}
+              onPress={() =>
+                navigation.navigate("ScProjectDetail", { projectId: project.id })
+              }
+            >
               <View style={styles.newTag}>
                 <Text style={styles.newTagText}>โครงการ{project.tag}</Text>
               </View>
@@ -111,8 +112,8 @@ export const ScPresentScreen: React.FC = () => {
                   ))}
                 </View>
               )}
-            </View>
-          </Pressable>
+            </Focusable>
+          </View>
         </View>
 
         <View style={styles.body}>
@@ -141,20 +142,23 @@ export const ScPresentScreen: React.FC = () => {
             </View>
 
             <View style={styles.ctaRow}>
-              <Pressable
+              <Focusable
+                hasTVPreferredFocus
                 style={styles.cta}
+                focusedStyle={scFocusRing}
                 onPress={() =>
                   navigation.navigate("ScRegister", { projectId: project.id })
                 }
               >
                 <Text style={styles.ctaText}>นำเสนอโครงการนี้</Text>
-              </Pressable>
-              <Pressable
+              </Focusable>
+              <Focusable
                 style={styles.heartButton}
+                focusedStyle={scFocusRing}
                 onPress={() => setLiked(!liked)}
               >
                 <Text style={styles.heartText}>{liked ? "❤️" : "♡"}</Text>
-              </Pressable>
+              </Focusable>
             </View>
           </View>
 

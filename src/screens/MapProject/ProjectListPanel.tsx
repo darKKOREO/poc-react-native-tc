@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { Project } from '@/services/projects';
-import { mapTheme } from './styles';
+import { Focusable } from '@/components/Focusable';
+import { mapTheme, mapFocusRing } from './styles';
 
 const formatPrice = (price: number): string => `From ฿${(price / 1000000).toFixed(2)}M`;
 
@@ -37,16 +38,17 @@ export const ProjectListPanel: React.FC<ProjectListPanelProps> = ({
         renderItem={({ item }) => {
           const selected = item.id === selectedProjectId;
           return (
-            <Pressable
+            <Focusable
               onPress={() => onSelectProject(item)}
               style={[styles.card, selected && styles.cardSelected]}
+              focusedStyle={mapFocusRing}
             >
               <Text style={styles.cardTitle} numberOfLines={1}>
                 {item.name}
               </Text>
               {item.province && <Text style={styles.cardSubtitle}>{item.province}</Text>}
               <Text style={styles.cardPrice}>{formatPrice(item.priceFrom)}</Text>
-            </Pressable>
+            </Focusable>
           );
         }}
         ListEmptyComponent={<Text style={styles.empty}>No projects in this area</Text>}

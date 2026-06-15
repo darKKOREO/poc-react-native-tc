@@ -4,7 +4,6 @@ import {
   Text,
   Image,
   StyleSheet,
-  Pressable,
   ScrollView,
   TextInput,
   KeyboardAvoidingView,
@@ -12,9 +11,10 @@ import {
 } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation';
+import { Focusable } from '../../components/Focusable';
 import { ScHeader } from './components/ScHeader';
 import { getProject } from './data';
-import { scTheme } from './theme';
+import { scTheme, scFocusOnPrimary } from './theme';
 
 type Route = RouteProp<RootStackParamList, 'ScRegister'>;
 
@@ -110,9 +110,14 @@ export const ScRegisterScreen: React.FC = () => {
               autoCapitalize="none"
             />
 
-            <Pressable style={styles.cta} onPress={handleSave}>
+            <Focusable
+              hasTVPreferredFocus
+              style={styles.cta}
+              focusedStyle={scFocusOnPrimary}
+              onPress={handleSave}
+            >
               <Text style={styles.ctaText}>บันทึกความสนใจ</Text>
-            </Pressable>
+            </Focusable>
             {saved && (
               <Text style={styles.savedText}>✓ บันทึกข้อมูลเรียบร้อยแล้ว</Text>
             )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView, findNodeHandle } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView, LayoutChangeEvent } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { FocusableItem } from '../../components/FocusableItem';
@@ -21,22 +21,16 @@ export const WelcomeScreen: React.FC = () => {
   const [dataExists, setDataExists] = useState(false);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
   const railRef = useRef<ScrollView>(null);
-  const syncRef = useRef<View>(null);
-  const browseRef = useRef<View>(null);
-  const mapRef = useRef<View>(null);
-  const scAssetRef = useRef<View>(null);
+  const itemOffsets = useRef<Record<string, number>>({});
 
-  const scrollItemIntoView = (itemRef: React.RefObject<View | null>) => {
-    const rail = railRef.current;
-    const item = itemRef.current;
-    if (!rail || !item) return;
-    const railHandle = findNodeHandle(rail);
-    if (!railHandle) return;
-    item.measureLayout(
-      railHandle,
-      x => rail.scrollTo({ x: Math.max(0, x - theme.spacing.lg), animated: true }),
-      () => {},
-    );
+  const handleItemLayout = (key: string) => (e: LayoutChangeEvent) => {
+    itemOffsets.current[key] = e.nativeEvent.layout.x;
+  };
+
+  const scrollItemIntoView = (key: string) => {
+    const x = itemOffsets.current[key];
+    if (x === undefined) return;
+    railRef.current?.scrollTo({ x: Math.max(0, x - theme.spacing.lg), animated: true });
   };
 
   useEffect(() => {
@@ -88,11 +82,11 @@ export const WelcomeScreen: React.FC = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.buttonRow}
         >
-          <View ref={syncRef} collapsable={false}>
+          <View onLayout={handleItemLayout('sync')}>
             <FocusableItem
               hasTVPreferredFocus={!dataExists}
               onPress={handleSync}
-              onFocus={() => scrollItemIntoView(syncRef)}
+              onFocus={() => scrollItemIntoView('sync')}
               style={styles.button}
             >
               {({ focused }) => (
@@ -104,11 +98,11 @@ export const WelcomeScreen: React.FC = () => {
           </View>
 
           {dataExists && (
-            <View ref={browseRef} collapsable={false}>
+            <View onLayout={handleItemLayout('browse')}>
               <FocusableItem
                 hasTVPreferredFocus
                 onPress={() => navigation.navigate('Dashboard')}
-                onFocus={() => scrollItemIntoView(browseRef)}
+                onFocus={() => scrollItemIntoView('browse')}
                 style={styles.button}
               >
                 {({ focused }) => (
@@ -120,10 +114,10 @@ export const WelcomeScreen: React.FC = () => {
             </View>
           )}
 
-          <View ref={mapRef} collapsable={false}>
+          <View onLayout={handleItemLayout('map')}>
             <FocusableItem
               onPress={() => navigation.navigate('MapProject')}
-              onFocus={() => scrollItemIntoView(mapRef)}
+              onFocus={() => scrollItemIntoView('map')}
               style={styles.button}
             >
               {({ focused }) => (
@@ -134,10 +128,10 @@ export const WelcomeScreen: React.FC = () => {
             </FocusableItem>
           </View>
 
-          <View ref={scAssetRef} collapsable={false}>
+          <View onLayout={handleItemLayout('scAsset')}>
             <FocusableItem
               onPress={() => navigation.navigate('ScPresent')}
-              onFocus={() => scrollItemIntoView(scAssetRef)}
+              onFocus={() => scrollItemIntoView('scAsset')}
               style={styles.button}
             >
               {({ focused }) => (

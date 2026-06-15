@@ -41,4 +41,23 @@ export const scTheme = {
   },
 };
 
+/** Shared TV D-pad focus ring — apply as `focusedStyle` on <Focusable>. */
+export const scFocusRing = {
+  borderWidth: 2,
+  borderColor: scTheme.colors.primary,
+  backgroundColor: scTheme.colors.primaryLight,
+};
+
+/** Border-only focus ring for elements that already have their own background/image. */
+export const scFocusOutline = {
+  borderWidth: 3,
+  borderColor: scTheme.colors.primary,
+};
+
+/** Focus ring for elements already on a `primary`-colored background (e.g. CTA buttons). */
+export const scFocusOnPrimary = {
+  borderWidth: 3,
+  borderColor: scTheme.colors.text,
+};
+
 export type ScTheme = typeof scTheme;

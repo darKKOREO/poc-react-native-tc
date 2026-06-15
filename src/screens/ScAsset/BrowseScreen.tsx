@@ -6,9 +6,10 @@ import { Map as MapView, Camera, Marker, type CameraRef } from '@maplibre/maplib
 import { MAP_STYLE_URL } from '@/config/mapConfig';
 import { MAP_MIN_ZOOM, MAP_MAX_ZOOM } from '@/services/mapTiles';
 import { RootStackParamList } from '../../navigation';
+import { Focusable } from '../../components/Focusable';
 import { ProjectCard } from './components/ProjectCard';
 import { SC_PROJECTS, ScProject, formatPriceShort } from './data';
-import { scTheme } from './theme';
+import { scTheme, scFocusRing } from './theme';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'ScBrowse'>;
 
@@ -66,9 +67,9 @@ export const ScBrowseScreen: React.FC = () => {
         </MapView>
 
         <View style={styles.searchOverlay}>
-          <Pressable onPress={() => navigation.goBack()} hitSlop={8}>
+          <Focusable onPress={() => navigation.goBack()} hitSlop={8} focusedStyle={scFocusRing}>
             <Text style={styles.backIcon}>←</Text>
-          </Pressable>
+          </Focusable>
           <TextInput
             style={styles.searchInput}
             value={search}
@@ -84,9 +85,10 @@ export const ScBrowseScreen: React.FC = () => {
           <Text style={styles.logo}>SC ASSET</Text>
           <View style={styles.miniTabs}>
             {(['Present', 'Consult', 'Browse', 'Register'] as const).map(tab => (
-              <Pressable
+              <Focusable
                 key={tab}
                 disabled={tab === 'Browse'}
+                focusedStyle={scFocusRing}
                 onPress={() => {
                   if (tab === 'Present') navigation.navigate('ScPresent');
                   else if (tab === 'Consult') navigation.navigate('ScConsult');
@@ -96,7 +98,7 @@ export const ScBrowseScreen: React.FC = () => {
                 <Text style={[styles.miniTab, tab === 'Browse' && styles.miniTabActive]}>
                   {tab}
                 </Text>
-              </Pressable>
+              </Focusable>
             ))}
           </View>
         </View>
@@ -115,11 +117,12 @@ export const ScBrowseScreen: React.FC = () => {
         </View>
 
         <ScrollView contentContainerStyle={styles.cards}>
-          {projects.map(project => (
+          {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
               project={project}
               selected={project.id === selectedId}
+              hasTVPreferredFocus={i === 0}
               onPress={() => {
                 if (project.id === selectedId) {
                   navigation.navigate('ScProjectDetail', { projectId: project.id });

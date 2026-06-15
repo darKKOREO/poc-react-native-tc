@@ -1,17 +1,24 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { Focusable } from '../../../components/Focusable';
 import { ScProject, formatPriceShort } from '../data';
-import { scTheme } from '../theme';
+import { scTheme, scFocusRing } from '../theme';
 
 type Props = {
   project: ScProject;
   selected?: boolean;
   onPress?: () => void;
+  hasTVPreferredFocus?: boolean;
 };
 
 /** Compact card used in the Present sidebar and the Browse list panel. */
-export const ProjectCard: React.FC<Props> = ({ project, selected = false, onPress }) => (
-  <Pressable onPress={onPress} style={[styles.card, selected && styles.cardSelected]}>
+export const ProjectCard: React.FC<Props> = ({ project, selected = false, onPress, hasTVPreferredFocus }) => (
+  <Focusable
+    hasTVPreferredFocus={hasTVPreferredFocus}
+    onPress={onPress}
+    style={[styles.card, selected && styles.cardSelected]}
+    focusedStyle={scFocusRing}
+  >
     <Image source={{ uri: project.imageUrl }} style={styles.thumb} />
     <View style={styles.info}>
       <Text style={styles.name} numberOfLines={1}>
@@ -27,7 +34,7 @@ export const ProjectCard: React.FC<Props> = ({ project, selected = false, onPres
         </View>
       </View>
     </View>
-  </Pressable>
+  </Focusable>
 );
 
 const styles = StyleSheet.create({

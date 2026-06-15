@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation';
-import { getProject, formatPriceFull } from './data';
-import { scTheme } from './theme';
+import React, { useState } from "react";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../navigation";
+import { Focusable } from "../../components/Focusable";
+import { getProject, formatPriceFull } from "./data";
+import {
+  scTheme,
+  scFocusRing,
+  scFocusOutline,
+  scFocusOnPrimary,
+} from "./theme";
 
-type Nav = NativeStackNavigationProp<RootStackParamList, 'ScProjectDetail'>;
-type Route = RouteProp<RootStackParamList, 'ScProjectDetail'>;
+type Nav = NativeStackNavigationProp<RootStackParamList, "ScProjectDetail">;
+type Route = RouteProp<RootStackParamList, "ScProjectDetail">;
 
-const TABS = ['Overview', 'สิ่งอำนวยความสะดวก', 'ผังบ้าน'] as const;
+const TABS = ["Overview", "สิ่งอำนวยความสะดวก", "ผังบ้าน"] as const;
 
 export const ScProjectDetailScreen: React.FC = () => {
   const navigation = useNavigation<Nav>();
@@ -17,20 +23,29 @@ export const ScProjectDetailScreen: React.FC = () => {
   const project = getProject(route.params.projectId);
 
   const [imageIndex, setImageIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>('Overview');
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("Overview");
   const [liked, setLiked] = useState(false);
 
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
-        <Pressable onPress={() => navigation.goBack()} hitSlop={12}>
+        <Focusable
+          hasTVPreferredFocus
+          onPress={() => navigation.goBack()}
+          hitSlop={12}
+          focusedStyle={scFocusRing}
+        >
           <Text style={styles.backText}>← กลับ</Text>
-        </Pressable>
+        </Focusable>
         <Text style={styles.logo}>SC ASSET</Text>
         <View style={styles.topActions}>
-          <Pressable onPress={() => setLiked(!liked)} hitSlop={8}>
-            <Text style={styles.actionIcon}>{liked ? '❤️' : '♡'}</Text>
-          </Pressable>
+          <Focusable
+            onPress={() => setLiked(!liked)}
+            hitSlop={8}
+            focusedStyle={scFocusRing}
+          >
+            <Text style={styles.actionIcon}>{liked ? "❤️" : "♡"}</Text>
+          </Focusable>
           <Text style={styles.actionIcon}>↗</Text>
         </View>
       </View>
@@ -38,26 +53,47 @@ export const ScProjectDetailScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.columns}>
           <View style={styles.leftColumn}>
-            <Image source={{ uri: project.gallery[imageIndex] }} style={styles.mainImage} />
+            <Image
+              source={{ uri: project.gallery[imageIndex] }}
+              style={styles.mainImage}
+            />
             <View style={styles.thumbRow}>
               {project.gallery.map((uri, i) => (
-                <Pressable key={uri} onPress={() => setImageIndex(i)} style={styles.thumbWrap}>
+                <Focusable
+                  key={uri}
+                  onPress={() => setImageIndex(i)}
+                  style={styles.thumbWrap}
+                  focusedStyle={scFocusOutline}
+                >
                   <Image
                     source={{ uri }}
-                    style={[styles.thumb, i === imageIndex && styles.thumbActive]}
+                    style={[
+                      styles.thumb,
+                      i === imageIndex && styles.thumbActive,
+                    ]}
                   />
-                </Pressable>
+                </Focusable>
               ))}
             </View>
 
             <View style={styles.tabsRow}>
-              {TABS.map(tab => (
-                <Pressable key={tab} onPress={() => setActiveTab(tab)} style={styles.tabItem}>
-                  <Text style={[styles.tabText, tab === activeTab && styles.tabTextActive]}>
+              {TABS.map((tab) => (
+                <Focusable
+                  key={tab}
+                  onPress={() => setActiveTab(tab)}
+                  style={styles.tabItem}
+                  focusedStyle={scFocusRing}
+                >
+                  <Text
+                    style={[
+                      styles.tabText,
+                      tab === activeTab && styles.tabTextActive,
+                    ]}
+                  >
                     {tab}
                   </Text>
                   {tab === activeTab && <View style={styles.tabUnderline} />}
-                </Pressable>
+                </Focusable>
               ))}
             </View>
             <Text style={styles.description}>{project.description}</Text>
@@ -71,8 +107,12 @@ export const ScProjectDetailScreen: React.FC = () => {
             <Text style={styles.location}>📍 {project.location}, กรุงเทพฯ</Text>
 
             <Text style={styles.priceLabel}>ราคาเริ่มต้น</Text>
-            <Text style={styles.price}>{formatPriceFull(project.priceFrom)}</Text>
-            <Text style={styles.priceMax}>~ {formatPriceFull(project.priceTo)}</Text>
+            <Text style={styles.price}>
+              {formatPriceFull(project.priceFrom)}
+            </Text>
+            <Text style={styles.priceMax}>
+              ~ {formatPriceFull(project.priceTo)}
+            </Text>
 
             <View style={styles.specGrid}>
               <View style={styles.specCard}>
@@ -94,7 +134,7 @@ export const ScProjectDetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.amenities}>
-              {project.amenities.map(a => (
+              {project.amenities.map((a) => (
                 <View key={a.label} style={styles.amenity}>
                   <Text style={styles.amenityIcon}>{a.icon}</Text>
                   <Text style={styles.amenityLabel}>{a.label}</Text>
@@ -102,12 +142,15 @@ export const ScProjectDetailScreen: React.FC = () => {
               ))}
             </View>
 
-            <Pressable
+            <Focusable
               style={styles.cta}
-              onPress={() => navigation.navigate('ScRegister', { projectId: project.id })}
+              focusedStyle={scFocusOnPrimary}
+              onPress={() =>
+                navigation.navigate("ScRegister", { projectId: project.id })
+              }
             >
               <Text style={styles.ctaText}>นำเสนอโครงการนี้</Text>
-            </Pressable>
+            </Focusable>
           </View>
         </View>
       </ScrollView>
@@ -121,9 +164,9 @@ const styles = StyleSheet.create({
     backgroundColor: scTheme.colors.background,
   },
   topBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: scTheme.spacing.xl,
     paddingVertical: scTheme.spacing.md,
   },
@@ -134,11 +177,11 @@ const styles = StyleSheet.create({
   logo: {
     color: scTheme.colors.primary,
     fontSize: scTheme.fontSize.lg,
-    fontWeight: '800',
+    fontWeight: "800",
     letterSpacing: 3,
   },
   topActions: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: scTheme.spacing.md,
   },
   actionIcon: {
@@ -150,7 +193,7 @@ const styles = StyleSheet.create({
     paddingBottom: scTheme.spacing.xl,
   },
   columns: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: scTheme.spacing.xl,
   },
   leftColumn: {
@@ -158,31 +201,31 @@ const styles = StyleSheet.create({
     gap: scTheme.spacing.md,
   },
   mainImage: {
-    width: '100%',
+    width: "100%",
     aspectRatio: 4 / 3,
     borderRadius: scTheme.borderRadius.lg,
     backgroundColor: scTheme.colors.surfaceMuted,
   },
   thumbRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: scTheme.spacing.sm,
   },
   thumbWrap: {
     flex: 1,
   },
   thumb: {
-    width: '100%',
+    width: "100%",
     aspectRatio: 4 / 3,
     borderRadius: scTheme.borderRadius.sm,
     borderWidth: 2,
-    borderColor: 'transparent',
+    borderColor: "transparent",
     backgroundColor: scTheme.colors.surfaceMuted,
   },
   thumbActive: {
     borderColor: scTheme.colors.primary,
   },
   tabsRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: scTheme.spacing.lg,
     borderBottomWidth: 1,
     borderColor: scTheme.colors.border,
@@ -197,10 +240,10 @@ const styles = StyleSheet.create({
   },
   tabTextActive: {
     color: scTheme.colors.text,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   tabUnderline: {
-    position: 'absolute',
+    position: "absolute",
     bottom: -1,
     left: 0,
     right: 0,
@@ -219,12 +262,12 @@ const styles = StyleSheet.create({
   breadcrumb: {
     color: scTheme.colors.primary,
     fontSize: scTheme.fontSize.xs,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   title: {
     color: scTheme.colors.text,
     fontSize: scTheme.fontSize.xxl,
-    fontWeight: '800',
+    fontWeight: "800",
   },
   location: {
     color: scTheme.colors.textSecondary,
@@ -238,7 +281,7 @@ const styles = StyleSheet.create({
   price: {
     color: scTheme.colors.primary,
     fontSize: scTheme.fontSize.xxl,
-    fontWeight: '800',
+    fontWeight: "800",
   },
   priceMax: {
     color: scTheme.colors.textSecondary,
@@ -246,12 +289,12 @@ const styles = StyleSheet.create({
     marginBottom: scTheme.spacing.md,
   },
   specGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: scTheme.spacing.sm,
   },
   specCard: {
-    flexBasis: '48%',
+    flexBasis: "48%",
     flexGrow: 1,
     backgroundColor: scTheme.colors.surface,
     borderRadius: scTheme.borderRadius.md,
@@ -267,18 +310,18 @@ const styles = StyleSheet.create({
   specValue: {
     color: scTheme.colors.text,
     fontSize: scTheme.fontSize.md,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   amenities: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     marginTop: scTheme.spacing.md,
     rowGap: scTheme.spacing.md,
   },
   amenity: {
-    flexBasis: '50%',
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexBasis: "50%",
+    flexDirection: "row",
+    alignItems: "center",
     gap: scTheme.spacing.sm,
   },
   amenityIcon: {
@@ -292,12 +335,12 @@ const styles = StyleSheet.create({
     backgroundColor: scTheme.colors.primary,
     borderRadius: scTheme.borderRadius.pill,
     paddingVertical: scTheme.spacing.md,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: scTheme.spacing.lg,
   },
   ctaText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: scTheme.fontSize.md,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 });

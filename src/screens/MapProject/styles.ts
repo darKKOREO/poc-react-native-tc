@@ -31,6 +31,12 @@ export const mapTheme = {
   },
 };
 
+/** Shared TV D-pad focus ring — apply as `focusedStyle` on <Focusable>. */
+export const mapFocusRing = {
+  borderWidth: 2,
+  borderColor: mapTheme.colors.bubbleSelected,
+};
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,

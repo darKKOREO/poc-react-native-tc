@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation';
+import { Focusable } from '../../components/Focusable';
 import { ScHeader } from './components/ScHeader';
 import { PROJECT_TYPES, PROJECT_LOCATIONS, BUDGET_RANGES } from './data';
-import { scTheme } from './theme';
+import { scTheme, scFocusRing, scFocusOnPrimary } from './theme';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'ScConsult'>;
 
@@ -37,36 +38,43 @@ export const ScConsultScreen: React.FC = () => {
 
         <Text style={styles.sectionTitle}>ประเภท</Text>
         <View style={styles.grid}>
-          {PROJECT_TYPES.map(t => {
+          {PROJECT_TYPES.map((t, i) => {
             const selected = selectedType === t.label;
             return (
-              <Pressable
+              <Focusable
                 key={t.label}
+                hasTVPreferredFocus={i === 0}
                 onPress={() => setSelectedType(selected ? null : t.label)}
                 style={[styles.optionCard, styles.gridThird, selected && styles.optionSelected]}
+                focusedStyle={scFocusRing}
               >
                 <Text style={styles.optionLabel}>
                   {t.icon}  <Text style={[styles.optionLabelText, selected && styles.optionLabelSelected]}>{t.label}</Text>
                 </Text>
                 <Text style={styles.optionCount}>{t.count} โครงการ</Text>
-              </Pressable>
+              </Focusable>
             );
           })}
         </View>
 
-        <Pressable style={styles.mapLink} onPress={() => navigation.navigate('ScBrowse')}>
+        <Focusable
+          style={styles.mapLink}
+          focusedStyle={scFocusRing}
+          onPress={() => navigation.navigate('ScBrowse')}
+        >
           <Text style={styles.mapLinkText}>🗺️ ดูทั้งหมดบนแผนที่</Text>
-        </Pressable>
+        </Focusable>
 
         <Text style={styles.sectionTitle}>พื้นที่โครงการ</Text>
         <View style={styles.grid}>
           {PROJECT_LOCATIONS.map(loc => {
             const selected = selectedLocation === loc.label;
             return (
-              <Pressable
+              <Focusable
                 key={loc.label}
                 onPress={() => setSelectedLocation(selected ? null : loc.label)}
                 style={[styles.optionCard, styles.gridThird, selected && styles.optionSelected]}
+                focusedStyle={scFocusRing}
               >
                 <Text style={styles.optionLabel}>
                   📍 <Text style={[styles.optionLabelText, selected && styles.optionLabelSelected]}>{loc.label}</Text>
@@ -74,7 +82,7 @@ export const ScConsultScreen: React.FC = () => {
                 <Text style={[styles.optionCount, selected && styles.optionCountSelected]}>
                   {loc.count} โครงการ
                 </Text>
-              </Pressable>
+              </Focusable>
             );
           })}
         </View>
@@ -85,7 +93,7 @@ export const ScConsultScreen: React.FC = () => {
             const selected = selectedBudget === b.label;
             const empty = b.count === 'ไม่มีโครงการ';
             return (
-              <Pressable
+              <Focusable
                 key={b.label}
                 disabled={empty}
                 onPress={() => setSelectedBudget(selected ? null : b.label)}
@@ -95,19 +103,24 @@ export const ScConsultScreen: React.FC = () => {
                   selected && styles.optionSelected,
                   empty && styles.optionDisabled,
                 ]}
+                focusedStyle={scFocusRing}
               >
                 <Text style={styles.optionLabel}>
                   💵 <Text style={[styles.optionLabelText, selected && styles.optionLabelSelected]}>{b.label}</Text>
                 </Text>
                 <Text style={styles.optionCount}>{b.count}</Text>
-              </Pressable>
+              </Focusable>
             );
           })}
         </View>
 
-        <Pressable style={styles.cta} onPress={() => navigation.navigate('ScBrowse')}>
+        <Focusable
+          style={styles.cta}
+          focusedStyle={scFocusOnPrimary}
+          onPress={() => navigation.navigate('ScBrowse')}
+        >
           <Text style={styles.ctaText}>ถัดไป →</Text>
-        </Pressable>
+        </Focusable>
       </ScrollView>
     </View>
   );
