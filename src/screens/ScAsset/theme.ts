@@ -61,3 +61,14 @@ export const scFocusOnPrimary = {
 };
 
 export type ScTheme = typeof scTheme;
+
+/** Dark palette for the Presentation Mode screens. */
+export const presentationTheme = {
+  colors: {
+    background: '#15120F',
+    surface: '#241F1A',
+    border: '#3A332C',
+    text: '#FFFFFF',
+    textMuted: '#A89E94',
+  },
+};

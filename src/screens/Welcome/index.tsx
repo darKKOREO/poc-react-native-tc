@@ -130,7 +130,7 @@ export const WelcomeScreen: React.FC = () => {
 
           <View onLayout={handleItemLayout('scAsset')}>
             <FocusableItem
-              onPress={() => navigation.navigate('ScPresent')}
+              onPress={() => navigation.navigate('ScPresentNormal')}
               onFocus={() => scrollItemIntoView('scAsset')}
               style={styles.button}
             >

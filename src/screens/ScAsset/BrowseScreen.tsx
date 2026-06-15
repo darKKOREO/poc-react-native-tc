@@ -90,7 +90,7 @@ export const ScBrowseScreen: React.FC = () => {
                 disabled={tab === 'Browse'}
                 focusedStyle={scFocusRing}
                 onPress={() => {
-                  if (tab === 'Present') navigation.navigate('ScPresent');
+                  if (tab === 'Present') navigation.navigate('ScPresentNormal');
                   else if (tab === 'Consult') navigation.navigate('ScConsult');
                   else navigation.navigate('ScRegister', {});
                 }}

@@ -6,6 +6,7 @@ import { HomeScreen } from '../screens/Home';
 import { DashboardScreen } from '../screens/Dashboard';
 import { MapProjectScreen } from '../screens/MapProject';
 import { ScPresentScreen } from '../screens/ScAsset/PresentScreen';
+import { ScPresentNormalScreen } from '../screens/ScAsset/PresentNormalScreen';
 import { ScProjectDetailScreen } from '../screens/ScAsset/ProjectDetailScreen';
 import { ScRegisterScreen } from '../screens/ScAsset/RegisterScreen';
 import { ScConsultScreen } from '../screens/ScAsset/ConsultScreen';
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   Player: { url: string };
   MapProject: undefined;
   ScPresent: undefined;
+  ScPresentNormal: undefined;
   ScConsult: undefined;
   ScBrowse: undefined;
   ScRegister: { projectId?: string } | undefined;
@@ -42,6 +44,11 @@ export const AppNavigator: React.FC = () => (
       <Stack.Screen
         name="ScPresent"
         component={ScPresentScreen}
+        options={{ gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="ScPresentNormal"
+        component={ScPresentNormalScreen}
         options={{ gestureEnabled: false }}
       />
       <Stack.Screen name="ScConsult" component={ScConsultScreen} />

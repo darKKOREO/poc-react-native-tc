@@ -217,6 +217,14 @@ export const formatPriceThai = (baht: number): string => {
 /** "฿ 12,500,000" — full form used on the Detail screen */
 export const formatPriceFull = (baht: number): string => `฿ ${baht.toLocaleString('en-US')}`;
 
+/** "฿12.5 - 35M" — price range badge used on presentation-mode grid cards */
+export const formatPriceRange = (from: number, to: number): string => {
+  const fromM = from / 1000000;
+  const toM = to / 1000000;
+  const fmt = (m: number) => (Number.isInteger(m) ? m : m.toFixed(1));
+  return `฿${fmt(fromM)} - ${fmt(toM)}M`;
+};
+
 // Consult-screen filter options (counts are display-only, from the design)
 export const PROJECT_TYPES: { icon: string; label: ScProjectType; count: number }[] = [
   { icon: '🏠', label: 'บ้านเดี่ยว', count: 30 },

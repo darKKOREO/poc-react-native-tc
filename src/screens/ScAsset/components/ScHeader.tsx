@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../navigation";
 import { Focusable } from "../../../components/Focusable";
-import { scTheme, scFocusOutline } from "../theme";
+import { scTheme, scFocusOutline, scFocusOnPrimary } from "../theme";
 
 export type ScTab =
   | "Present"
@@ -16,7 +16,7 @@ export type ScTab =
 type ScNav = NativeStackNavigationProp<RootStackParamList>;
 
 const TAB_ROUTES: Partial<Record<ScTab, keyof RootStackParamList>> = {
-  Present: "ScPresent",
+  Present: "ScPresentNormal",
   Consult: "ScConsult",
   Browse: "ScBrowse",
   Register: "ScRegister",
@@ -79,6 +79,13 @@ export const ScHeader: React.FC<Props> = ({
           );
         })}
       </View>
+      <Focusable
+        onPress={() => navigation.navigate("ScPresent")}
+        style={styles.presentationModeButton}
+        focusedStyle={scFocusOnPrimary}
+      >
+        <Text style={styles.presentationModeText}>Presentation Mode</Text>
+      </Focusable>
     </View>
   );
 };
@@ -131,5 +138,17 @@ const styles = StyleSheet.create({
   },
   tabTextActive: {
     color: "#FFFFFF",
+  },
+  presentationModeButton: {
+    backgroundColor: scTheme.colors.primary,
+    borderRadius: scTheme.borderRadius.pill,
+    paddingHorizontal: scTheme.spacing.md,
+    paddingVertical: scTheme.spacing.sm - 1,
+    marginLeft: scTheme.spacing.sm,
+  },
+  presentationModeText: {
+    color: "#FFFFFF",
+    fontSize: scTheme.fontSize.sm,
+    fontWeight: "700",
   },
 });
